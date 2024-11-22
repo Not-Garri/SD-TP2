@@ -43,6 +43,10 @@ public class Product {
         return name.equals(p.name) && store.equals(p.store);
     }
 
+    public boolean compare(String productName, String productStore) {
+        return name.equals(productName) && store.equals(productStore);
+    }
+
     public String toString(){
         return String.format("Nome: %s - Preco: %.2f - Loja: %s - Adicionado por: %s - Data: %s", name, price, store, username, date);
     }
