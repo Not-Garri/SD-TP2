@@ -1,0 +1,6 @@
+leite de amendoa;2.54;pingo doce;god;2024/11/21 - 13:00
+comida;20.02;loja da comida;god;2024/11/21 - 13:00
+portatil;500.00;Loja;god;2024/11/21 - 13:00
+computador;1000.00;worten;god;2024/11/21 - 13:00
+leite;14.54;Loja;god;2024/11/21 - 13:00
+novo produto;69.69;nova loja;user1;2024/11/21 - 13:28
