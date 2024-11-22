@@ -23,6 +23,7 @@ public interface ServerInterface extends Remote {
     ArrayList<String> searchProductByName(String productName) throws RemoteException;
     ArrayList<String> searchProductbyStore(String storeName) throws RemoteException;
     ArrayList<String> getProductList() throws RemoteException;
+    ComunicationCode findProduct(String productName, String store) throws RemoteException;
     ComunicationCode addProduct(String name, Float price, String store, String username, String date) throws RemoteException;
     ComunicationCode updateProduct(String name, Float price, String store, String username, String date) throws RemoteException;
 

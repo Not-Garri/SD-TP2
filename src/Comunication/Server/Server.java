@@ -125,6 +125,17 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
     }
 
     @Override
+    public ComunicationCode findProduct(String productName, String store) throws RemoteException {
+
+        for(Product p : productList) {
+            if(p.compare(productName, store))
+                return ComunicationCode.PRODUCT_FOUND;
+        }
+
+        return ComunicationCode.PRODUCT_NOT_FOUND;
+    }
+
+    @Override
     public ComunicationCode addProduct(String name, Float price, String store, String username, String date) {
 
         Product newProduct = new Product(name, price, store, username, date);
