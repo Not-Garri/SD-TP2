@@ -24,6 +24,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 
     static FileManager credentialsManager = new FileManager(PATH, CREDENTIALS_FILE_NAME);
     static FileManager productManager = new FileManager(PATH, PRODUCTS_FILE_NAME);
+
     static Credentials[] validCredentials;
     static ArrayList<User> loggedUsers = new ArrayList<>();
 
@@ -49,13 +50,6 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
             Naming.rebind("rmi://localhost:1234/products", server);
             System.out.println("A aguardar login...");
 
-            System.out.print("Indique o produto por que quer pesquisar (SERVER): ");
-            String query = sc.nextLine();
-
-            ArrayList<String> foundList = server.searchProductByName(query);
-
-            for(String p : foundList)
-                System.out.println(p + " (SERVER)");
 
         } catch (RemoteException e) {
             System.err.println("Erro ao criar servidor RMI");
@@ -69,8 +63,21 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 
     }
 
+    //TODO:
+    // Garantir exclusao mutua
+    // Acabar update
+
     protected Server() throws RemoteException {
         super();
+    }
+
+    private void writeListToFile() {
+
+        productManager.writeToFile(productList.getFirst().toFileString());
+
+        for (int i = 1; i < productList.size(); i++) {
+            productManager.appendToFile(productList.get(i).toFileString());
+        }
     }
 
     @Override
@@ -147,9 +154,16 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
             //ignored
         }
 
+        //Ve se o produto a adicionar ja existe na lista
         for(Product p : productList) {
-            if(newProduct.compare(p))
+
+            //Se o produto existir
+            if(newProduct.compare(p)) {
+                listSemaphore.release();
+
+                //Indica que a operacao falhou
                 return ComunicationCode.OPERATION_FAILURE;
+            }
         }
 
         productList.add(newProduct);
@@ -160,8 +174,30 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
     }
 
     @Override
-    public ComunicationCode updateProduct(String name, Float price, String store, String username, String date) {
-        return null;
+    public ComunicationCode updateProduct(String name, Float newPrice, String store, String username, String date) {
+
+
+        try {
+            listSemaphore.acquire();
+        } catch (InterruptedException e) {
+            //Ignored
+        }
+
+        for (Product p : productList) {
+            //Ve se o nome do produto e da loja sao iguais aos fornecidos pelo utilizador
+            if(p.compare(name, store)) {
+                p.setPrice(newPrice);
+                p.setUsername(username);
+                p.setDate(date);
+                writeListToFile();
+                listSemaphore.release();
+                return ComunicationCode.OPERATION_SUCCESS;
+            }
+        }
+
+        listSemaphore.release();
+        return ComunicationCode.OPERATION_FAILURE;
+
     }
 
 
