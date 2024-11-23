@@ -2,7 +2,6 @@ package Comunication;
 
 import Utils.ComunicationCode;
 
-import javax.xml.stream.events.Comment;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public interface ServerInterface extends Remote {
     ArrayList<String> getProductList() throws RemoteException;
     ComunicationCode findProduct(String productName, String store) throws RemoteException;
     ComunicationCode addProduct(String name, Float price, String store, String username, String date) throws RemoteException;
-    ComunicationCode updateProduct(String name, Float price, String store, String username, String date) throws RemoteException;
+    ComunicationCode updateProduct(String name, Float newPrice, String store, String username, String date) throws RemoteException;
 
 
 }
