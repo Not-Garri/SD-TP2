@@ -12,6 +12,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.concurrent.Semaphore;
 
@@ -65,7 +66,6 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 
     //TODO:
     // Garantir exclusao mutua
-    // Acabar update
 
     protected Server() throws RemoteException {
         super();
@@ -101,10 +101,18 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 
         ArrayList<String> foundProducts = new ArrayList<>();
 
+        try{
+            listSemaphore.acquire();
+        } catch (InterruptedException e) {
+            //ignored
+        }
+
         for (Product p : productList) {
             if (p.getName().contains(productName))
                 foundProducts.add(p.toString());
         }
+
+        listSemaphore.release();
 
         return foundProducts;
     }
@@ -114,31 +122,55 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 
         ArrayList<String> foundProducts = new ArrayList<>();
 
+        try{
+            listSemaphore.acquire();
+        } catch (InterruptedException e) {
+            //Ignored
+        }
+
         for (Product p : productList) {
             if (p.getStore().equalsIgnoreCase(storeName))
                 foundProducts.add(p.toString());
         }
 
+        listSemaphore.release();
         return foundProducts;
     }
 
     @Override
     public ArrayList<String> getProductList() throws RemoteException {
         ArrayList<String> listAsString = new ArrayList<>();
+
+        try{
+            listSemaphore.acquire();
+        } catch (InterruptedException e) {
+            //ignored
+        }
+
         for(Product p : productList)
             listAsString.add(p.toString());
 
+        listSemaphore.release();
         return listAsString;
     }
 
     @Override
     public ComunicationCode findProduct(String productName, String store) throws RemoteException {
 
-        for(Product p : productList) {
-            if(p.compare(productName, store))
-                return ComunicationCode.PRODUCT_FOUND;
+        try{
+            listSemaphore.acquire();
+        } catch (InterruptedException e) {
+            //ignored
         }
 
+        for(Product p : productList) {
+            if(p.compare(productName, store)) {
+                listSemaphore.release();
+                return ComunicationCode.PRODUCT_FOUND;
+            }
+        }
+
+        listSemaphore.release();
         return ComunicationCode.PRODUCT_NOT_FOUND;
     }
 
@@ -191,6 +223,20 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
                 p.setDate(date);
                 writeListToFile();
                 listSemaphore.release();
+
+                Iterator<User> userIterator = loggedUsers.iterator();
+
+                while(userIterator.hasNext()) {
+                    User user = userIterator.next();
+
+                    try {
+                        user.clientInterface.notifyClient("O preco do produto " + name + "foi alterado para " + newPrice + "€ pelo user " + username);
+                    } catch (RemoteException e) {
+                        System.out.println("Nao foi possivel comunicar com o utilizador " + user.userCredentials.getUsername());
+                        userIterator.remove();
+                    }
+                }
+
                 return ComunicationCode.OPERATION_SUCCESS;
             }
         }
