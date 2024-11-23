@@ -23,7 +23,19 @@ public class FileManager {
         return file;
     }
 
+    public void writeToFile(String string){
+        try
+        (
+            //Apaga tudo o que estiver no ficheiro quando for escrever
+            FileWriter fileWriter = new FileWriter(file)
+        ) {
 
+            fileWriter.write(string);
+
+        } catch (IOException e) {
+            System.err.println("Erro ao abrir o ficheiro");
+        }
+    }
 
     public void appendToFile(String string) {
 
