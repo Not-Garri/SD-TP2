@@ -96,17 +96,36 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
                     }
 
                     case "A" -> {
+                        float priceAsFloat;
+
                         System.out.println("Adicionar um produto");
                         System.out.print("Indique o nome do produto que pretende adicionar: ");
                         String newProductName = sc.nextLine();
-                        System.out.print("Indique o nome do produto que pretende adicionar: ");
-                        String newProductPrice = sc.nextLine();
-                        System.out.print("Indique o nome do produto que pretende adicionar: ");
+
+                        System.out.print("Indique o preco do produto que pretende adicionar: ");
+
+                        while(true) {
+
+                            String newProductPrice = sc.nextLine();
+
+                            try{
+                                priceAsFloat = Float.parseFloat(newProductPrice);
+                                break;
+
+                            } catch (NumberFormatException e) {
+                                System.out.print("Por favor, introduza um numero valido: ");
+                            }
+                        }
+
+
+                        System.out.print("Indique a loja do produto que pretende adicionar: ");
                         String newProductStore = sc.nextLine();
 
                         String date = new SimpleDateFormat("yyyy/MM/dd - HH:mm").format(new java.util.Date());
 
-                         ComunicationCode code = serverInterface.addProduct(newProductName, Float.parseFloat(newProductPrice), newProductStore, username, date);
+
+                        ComunicationCode code = serverInterface.addProduct(newProductName, priceAsFloat, newProductStore, username, date);
+
 
                          if(code == ComunicationCode.OPERATION_FAILURE)
                              System.out.println("Nao foi possivel adicionar o produto a lista");
@@ -114,7 +133,42 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
                              System.out.println("Produto adicionado com sucesso");
                     }
 
-                    case "U" -> System.out.println("Atualizar um produto");
+                    case "U" -> {
+
+                        float priceAsFloat;
+
+                        System.out.println("Atualizar um produto");
+
+                        System.out.println("Indique o nome do produto que pretende atualizar");
+                        String productName = sc.nextLine();
+
+                        System.out.println("Indique a loja em que o produto se encontra");
+                        String productStore = sc.nextLine();
+
+                        System.out.println("Indique o novo preco do produto: ");
+                        while(true) {
+
+                            String newProductPrice = sc.nextLine();
+
+                            try{
+                                priceAsFloat = Float.parseFloat(newProductPrice);
+                                break;
+
+                            } catch (NumberFormatException e) {
+                                System.out.print("Por favor, introduza um numero valido: ");
+                            }
+                        }
+
+                        String date = new SimpleDateFormat("yyyy/MM/dd - HH:mm").format(new java.util.Date());
+
+                        ComunicationCode c = serverInterface.updateProduct(productName, priceAsFloat, productStore, username, date);
+
+                        if(c == ComunicationCode.OPERATION_FAILURE)
+                            System.out.println("Nao foi possivel encontrar o produto a atualizar na lista");
+                        else
+                            System.out.println("Produto atualizado com sucesso");
+
+                    }
 
                     case "Q" -> {
                         System.out.println("A terminar o programa...");
