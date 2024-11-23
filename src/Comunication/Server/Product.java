@@ -31,6 +31,14 @@ public class Product {
         this.store = store;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public Product(String name, float price, String store, String username, String date) {
         this.store = store;
         this.price = price;
