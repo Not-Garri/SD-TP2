@@ -1,6 +1,9 @@
 leite de amendoa;2.54;pingo doce;god;2024/11/21 - 13:00
 comida;20.02;loja da comida;god;2024/11/21 - 13:00
-portatil;500.00;Loja;god;2024/11/21 - 13:00
-computador;1000.00;worten;god;2024/11/21 - 13:00
+portatil;500.0;Loja;god;2024/11/21 - 13:00
+computador;1000.0;worten;god;2024/11/21 - 13:00
 leite;14.54;Loja;god;2024/11/21 - 13:00
-novo produto;69.69;nova loja;user1;2024/11/21 - 13:28
+novo produto;1.23;nova loja;user3;2024/11/23 - 22:29
+Produto user3;103.69;loja user3;user1;2024/11/23 - 16:44
+ProdUser1;678.9;loja;user2;2024/11/23 - 22:25
+produto caro;34567.89;loja;user3;2024/11/23 - 22:33
