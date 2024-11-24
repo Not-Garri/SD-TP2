@@ -17,7 +17,7 @@ public enum ComunicationCode {
     PRODUCT_FOUND,                          //Indica que o produto em questao foi encontrado
     PRODUCT_NOT_FOUND;                      //Indica que o produto em questao nao foi encontrado
 
-    //Permite intanciar variaveis do tipo ComunicationCode
+    //Permite instanciar variaveis do tipo ComunicationCode
     ComunicationCode() {
     }
 
