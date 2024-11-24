@@ -48,11 +48,11 @@ public class Product {
     }
 
     public boolean compare(Product p) {
-        return name.equals(p.name) && store.equals(p.store);
+        return name.equalsIgnoreCase(p.name) && store.equalsIgnoreCase(p.store);
     }
 
     public boolean compare(String productName, String productStore) {
-        return name.equals(productName) && store.equals(productStore);
+        return name.equalsIgnoreCase(productName) && store.equalsIgnoreCase(productStore);
     }
 
     public String toString(){
