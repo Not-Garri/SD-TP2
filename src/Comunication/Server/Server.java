@@ -18,7 +18,6 @@ import java.util.concurrent.Semaphore;
 
 public class Server extends UnicastRemoteObject implements ServerInterface {
 
-    //TODO: O resto dos metodos
     private static final String PATH = System.getProperty("user.dir") + "\\src\\Files\\";
     private static final String CREDENTIALS_FILE_NAME = "credentials.txt";
     private static final String PRODUCTS_FILE_NAME = "products.txt";
@@ -64,9 +63,6 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
 
     }
 
-    //TODO:
-    // Garantir exclusao mutua
-
     protected Server() throws RemoteException {
         super();
     }
@@ -108,7 +104,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
         }
 
         for (Product p : productList) {
-            if (p.getName().contains(productName))
+            if (p.getName().toUpperCase().contains(productName.toUpperCase()))
                 foundProducts.add(p.toString());
         }
 
