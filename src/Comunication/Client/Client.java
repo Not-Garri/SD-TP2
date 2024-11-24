@@ -35,7 +35,7 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        String option = "";
+        String option;
 
 
         try {
@@ -170,7 +170,7 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
                         System.out.print("Indique o nome do produto que pretende atualizar: ");
                         String productName = sc.nextLine();
 
-                        System.out.print("Indique a loja em que o produto se encontra:");
+                        System.out.print("Indique a loja em que o produto se encontra: ");
                         String productStore = sc.nextLine();
 
                         System.out.print("Indique o novo preco do produto: ");
@@ -231,7 +231,7 @@ public class Client extends UnicastRemoteObject implements ClientInterface {
      * <h2>notifyClient</h2>
      * Metodo que imprime uma mensagem no terminal do cliente
      * @param notification Mensagem a ser imprimida no terminal
-     * @throws RemoteException
+     * @throws RemoteException Caso nao seja possivel contactar o registo RMI
      */
     @Override
     public void notifyClient(String notification) throws RemoteException {

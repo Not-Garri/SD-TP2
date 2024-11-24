@@ -18,7 +18,6 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Scanner;
 import java.util.concurrent.Semaphore;
 
 public class Server extends UnicastRemoteObject implements ServerInterface {
@@ -301,7 +300,7 @@ public class Server extends UnicastRemoteObject implements ServerInterface {
                     User user = userIterator.next();
 
                     try {
-                        user.clientInterface.notifyClient("O preco do produto " + name + "foi alterado para " + newPrice + "€ pelo user " + username);
+                        user.clientInterface.notifyClient("O preco do produto " + name + " foi alterado para " + newPrice + "€ pelo user " + username);
                     } catch (RemoteException e) {
                         System.out.println("Nao foi possivel comunicar com o utilizador " + user.userCredentials.getUsername());
                         userIterator.remove();
