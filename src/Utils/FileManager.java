@@ -1,3 +1,8 @@
+/* ------------------------------------------------ *
+ *  Trabalho realizado por Rodrigo Garraio, n.23599 *
+ *    3. Ano, 1. Semestre, Sistemas Distribuidos    *
+ * ------------------------------------------------ */
+
 package Utils;
 
 import java.io.*;
@@ -5,24 +10,43 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-
+/**
+ * <h2>FileManager</h2>
+ * Objeto que gere o ficheiro com que e criado. Isso inclui operacoes
+ * de escrita no ficheiro e de leitura do ficheiro
+ */
 public class FileManager {
 
     private final String fileName;
     private final File file;
 
+    /**
+     * Cria um novo objeto FileManager
+     * @param filePath Caminho ate ao ficheiro
+     * @param fileName Nome do ficheiro
+     */
     public FileManager(String filePath, String fileName){
+        //Cria o caminho completo ao ficheiro, concatenando o nome do ficheiro ao final do caminho
         String fullFilePath = filePath + "\\" + fileName;
 
         this.fileName = fileName;
+
+        //Cria um novo objeto File com base no caminho completo para o ficheiro
         file = new File(fullFilePath);
     }
 
-
+    /**
+     * Retorna o ficheiro que o FileManager gere
+     * @return Ficheiro gerido pelo FileManager
+     */
     public File getFile(){
         return file;
     }
 
+    /**
+     * Escreve a linha passada como argumento no ficheiro, substituindo os conteudos atuais do ficheiro
+     * @param string Linha a ser escrita no ficheiro
+     */
     public void writeToFile(String string){
         try
         (
@@ -37,6 +61,10 @@ public class FileManager {
         }
     }
 
+    /**
+     * Coloca a linha passada no final do ficheiro sem substituir os conteudos atuais do ficheiro
+     * @param string Linha a ser colocada no ficheiro
+     */
     public void appendToFile(String string) {
 
         try
@@ -51,6 +79,10 @@ public class FileManager {
         }
     }
 
+    /**
+     * Devolve uma lista de todas as linhas do ficheiro
+     * @return Lista de linhas do ficheito
+     */
     public String[] getListFromFile() {
 
         ArrayList<String> linesList = new ArrayList<>();
