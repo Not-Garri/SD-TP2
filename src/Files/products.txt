@@ -5,5 +5,5 @@ computador;1000.0;worten;god;2024/11/21 - 13:00
 leite;14.54;Loja;god;2024/11/21 - 13:00
 novo produto;1.23;nova loja;user3;2024/11/23 - 22:29
 Produto user3;103.69;loja user3;user1;2024/11/23 - 16:44
-ProdUser1;678.9;loja;user2;2024/11/23 - 22:25
+ProdUser1;123.45;loja;user1;2024/11/24 - 16:26
 produto caro;34567.89;loja;user3;2024/11/23 - 22:33
